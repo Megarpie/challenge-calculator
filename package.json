@@ -1,0 +1,17 @@
+{
+  "name": "challenge-calculator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "mocha"
+  },
+  "keywords": [],
+  "author": "Megan Kim",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "^6.2.0"
+  }
+}
