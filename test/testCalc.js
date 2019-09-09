@@ -1,7 +1,7 @@
 const assert = require('assert');
 const calculator = require('../index');
 
-describe('#2: Add unlimited number of numbers', () => {
+describe('#1: Support a maximum of 2 numbers using a comma delimiter', () => {
   it('should return 0 if empty string', () => {
     assert.equal(calculator.add(''), 0);
   });
@@ -17,10 +17,26 @@ describe('#2: Add unlimited number of numbers', () => {
   it('should add two numbers with two invalid strings', () => {
     assert.equal(calculator.add('milk, tea'), 0);
   });
+  // commented out because of modified code to allow unlimited numbers
+  // it('should add only first two when more than two numbers inputed', () => {
+  //   assert.equal(calculator.addTwo('4,5,6'), 9);
+  // });
+});
+
+describe('#2: Support a maximum of 2 numbers using a comma delimiter', () => {
   it('should add unlimted number of numbers', () => {
     assert.equal(calculator.add('1,2,3,4,5,6,7,8,9,10'), 55);
   });
   it('should add unlimted number of numbers with invalid strings', () => {
     assert.equal(calculator.add('juice,2,3,4,horchata,6,7,8,9,10'), 49);
+  });
+});
+
+describe('#3: Support newline character as an alternative delimiter', () => {
+  it('should add two numbers with newline', () => {
+    assert.equal(calculator.add('1\\n5'), 6);
+  });
+  it('should add numbers with combination of commas and newlines', () => {
+    assert.equal(calculator.add('2,4\\n6\\n8'), 20);
   });
 });

@@ -8,8 +8,8 @@ const rl = readline.createInterface({
 });
 
 /*
-Step 2:
-Support an unlimited number of numbers
+Step 3:
+Support a newline character as an alternative delimiter
 */
 const addStringCalculator = (str) => {
   // check if string is empty first, return 0 if so
@@ -17,8 +17,10 @@ const addStringCalculator = (str) => {
     return 0;
   }
 
+  // replace all occurances of new line with comma
   // convert string into number array
-  const numArray = str.split(',').map(Number);
+  const replaceNewLine = str.replace(/\\n/g, ',');
+  const numArray = replaceNewLine.split(',').map(Number);
 
   return numArray.reduce((x,y) => numberCheck(x) + numberCheck(y), 0);
 }
