@@ -1,4 +1,5 @@
 const assert = require('assert');
+const expect = require('chai').expect;
 const calculator = require('../index');
 
 describe('#1: Support a maximum of 2 numbers using a comma delimiter', () => {
@@ -38,5 +39,17 @@ describe('#3: Support newline character as an alternative delimiter', () => {
   });
   it('should add numbers with combination of commas and newlines', () => {
     assert.equal(calculator.add('2,4\\n6\\n8'), 20);
+  });
+});
+
+describe('#4: Deny negative numbers. An exception should be thrown that includes all of the negative numbers provided', () => {
+  it('should throw exception with one negative number', () => {
+    expect(() => calculator.add('-1')).to.throw('Negative numbers not allowed: -1');
+  });
+  it('should throw exception with mix of negative numbers and positive numbers', () => {
+    expect(() => calculator.add('4,-5,10')).to.throw('Negative numbers not allowed: -5');
+  });
+  it('should throw exception with mix of negative numbers and positive numbers', () => {
+    expect(() => calculator.add('1\\n-3,-9')).to.throw('Negative numbers not allowed: -3,-9');
   });
 });

@@ -22,6 +22,12 @@ const addStringCalculator = (str) => {
   const replaceNewLine = str.replace(/\\n/g, ',');
   const numArray = replaceNewLine.split(',').map(Number);
 
+  // check for negative numbers
+  const negativeNums = numArray.filter(n => n < 0);
+  if (negativeNums.length > 0) {
+    throw new Error("Negative numbers not allowed: " + negativeNums.toString());
+  }
+
   return numArray.reduce((x,y) => numberCheck(x) + numberCheck(y), 0);
 }
 

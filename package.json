@@ -10,7 +10,9 @@
   "keywords": [],
   "author": "Megan Kim",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "chai": "^4.2.0"
+  },
   "devDependencies": {
     "mocha": "^6.2.0"
   }
