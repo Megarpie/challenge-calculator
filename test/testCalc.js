@@ -68,3 +68,15 @@ describe('#5: Ignore any number greater than 1000', () => {
     assert.equal(calculator.add('2,pie,3030,8'), 10);
   });
 });
+
+describe('#6: Support 1 custom single character length delimiter', () => {
+  it('should add numbers with custom delimiter', () => {
+    assert.equal(calculator.add('//*\\n1*2'), 3);
+  });
+  it('should add numbers with custom delimiter and alternative delimiters', () => {
+    assert.equal(calculator.add('//$\\n2\\n1$5\\n6$0'), 14);
+  });
+  it('should add numbers with custom delimiter and alternative delimiters and invalid strings', () => {
+    assert.equal(calculator.add('//#\\n2#2,hello#world\\n8'), 12);
+  });
+});
