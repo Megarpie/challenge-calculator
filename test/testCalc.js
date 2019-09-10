@@ -64,4 +64,7 @@ describe('#5: Ignore any number greater than 1000', () => {
   it('should add multiple numbers with numbers greater than 1000', () => {
     assert.equal(calculator.add('1,5,5000\\n5'), 11);
   });
+  it('should add multiple numbers with numbers greater than 1000 and invalid strings', () => {
+    assert.equal(calculator.add('2,pie,3030,8'), 10);
+  });
 });

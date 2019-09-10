@@ -8,8 +8,8 @@ const rl = readline.createInterface({
 });
 
 /*
-Step 3:
-Support a newline character as an alternative delimiter
+Step 5:
+Ignore any number greater than 1000
 */
 const addStringCalculator = (str) => {
 
