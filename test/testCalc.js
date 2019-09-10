@@ -49,7 +49,19 @@ describe('#4: Deny negative numbers. An exception should be thrown that includes
   it('should throw exception with mix of negative numbers and positive numbers', () => {
     expect(() => calculator.add('4,-5,10')).to.throw('Negative numbers not allowed: -5');
   });
+  it('should throw exception with mix of negative numbers, positive numbers, and invalid strings', () => {
+    expect(() => calculator.add('2,owl,fox,-4,9')).to.throw('Negative numbers not allowed: -4');
+  });
   it('should throw exception with mix of negative numbers and positive numbers', () => {
     expect(() => calculator.add('1\\n-3,-9')).to.throw('Negative numbers not allowed: -3,-9');
+  });
+});
+
+describe('#5: Ignore any number greater than 1000', () => {
+  it('should add two numbers with one greater than 1000', () => {
+    assert.equal(calculator.add('1\\n1001'), 1);
+  });
+  it('should add multiple numbers with numbers greater than 1000', () => {
+    assert.equal(calculator.add('1,5,5000\\n5'), 11);
   });
 });
