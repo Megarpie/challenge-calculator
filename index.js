@@ -8,11 +8,10 @@ const rl = readline.createInterface({
 });
 
 /*
-Step 7:
-Support 1 custom delimiter of any length
+Step 8:
+Support multiple delimiters of any length
 */
 const addStringCalculator = (str) => {
-
   // check if string is empty first, return 0 if so
   if (!str) {
     return 0;
@@ -21,14 +20,36 @@ const addStringCalculator = (str) => {
   // replace all occurances of new line and custom delimiters with comma
   // convert string into number array
   const replaceDelimiters = parseDelimiter(str);
-  const numArray = replaceDelimiters.split(',').map(Number);
+  const numArray = replaceDelimiters.map(Number);
 
   return calculateSum(numArray);
 }
 
-// checks if number is NaN, return 0 if so
-const numberCheck = (num) => {
-  return Number.isNaN(num) ? 0 : num;
+// parse and replace delimiters with comma
+const parseDelimiter = (str) => {
+  const checkCustomDelimiter = str.trim().substring(0,2);
+  let replacedStr = '';
+
+  // check for custom delimiters
+  if (checkCustomDelimiter === '//') {
+    // find custom delimiter
+    const delimiter = getDelimitersArr(str.match(/(?<=\/\/)(.*?)(?=\\n)/g).toString());
+    const pattern = '[(' + delimiter.join() + ',)]';
+    const regex = new RegExp(pattern, 'g');
+
+    // extract string that needs to be added 
+    const numStr = str.substring(str.indexOf('\\n') + 2);
+    replacedStr = numStr.replace(/\\n/g, ',').split(regex);
+    
+    return replacedStr;
+  } else {
+    return str.replace(/\\n/g, ',').split(',');
+  }
+}
+
+// return array of delimiters
+function getDelimitersArr(str){
+  return str.split(/\[|\]/).filter(d => !!d.length);
 }
 
 // calculate sum
@@ -57,40 +78,12 @@ const calculateSum = (arr) => {
   return sum;
 }
 
-// parse and replace delimiters with comma
-const parseDelimiter = (str) => {
-  const checkCustomDelimiter = str.trim().substring(0,2);
-  let replacedStr = '';
-
-  // check for custom delimiters
-  if (checkCustomDelimiter === '//') {
-    // find custom delimiter
-    let delimiterRegex = str.match(/(?<=\/\/)(.*?)(?=\\n)/g).toString();
-
-    // check for any length custom delimiter
-    if (delimiterRegex.startsWith('[')) {
-      delimiterRegex = delimiterRegex.substring(1, delimiterRegex.length -1);
-    }
-
-    const pattern = new RegExp(escapeRegExp(delimiterRegex), 'g');
-
-    // extract string that needs to be added 
-    numStr = str.substring(str.indexOf('\\n') + 2).trim();
-    replacedStr = numStr.replace(pattern, ',').replace(/\\n/g, ',');
-    
-    return replacedStr;
-  } else {
-    return str.replace(/\\n/g, ',');
-  }
-}
-
-// escape special characters
-const escapeRegExp = (str) => {
-  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+// checks if number is NaN, return 0 if so
+const numberCheck = (num) => {
+  return Number.isNaN(num) ? 0 : num;
 }
 
 rl.prompt();
-
 rl.on('line', (line) => {
   const number = addStringCalculator(line);
   console.log('Your sum is: ', number);

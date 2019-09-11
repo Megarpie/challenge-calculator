@@ -92,3 +92,12 @@ describe('#7: Support 1 custom delimiter of any length', () => {
     assert.equal(calculator.add('//[;%%;]\\n1,3;%%;15;%%;blue'), 19);
   });
 });
+
+describe('#8: Support multiple delimiters of any length', () => {
+  it('should add numbers with multiple delimiters', () => {
+    assert.equal(calculator.add('//[#][!!]\\n1!!2#3'), 6);
+  });
+  it('should add numbers with multiple delimiters and invalid strings', () => {
+    assert.equal(calculator.add('//[@;][f3f][!]\\n1!1,1@;1f3f1\\n1!kirby'), 6);
+  });
+});
