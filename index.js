@@ -8,8 +8,8 @@ const rl = readline.createInterface({
 });
 
 /*
-Step 6:
-Support 1 custom single character length delimiter
+Step 7:
+Support 1 custom delimiter of any length
 */
 const addStringCalculator = (str) => {
 
@@ -65,23 +65,28 @@ const parseDelimiter = (str) => {
   // check for custom delimiters
   if (checkCustomDelimiter === '//') {
     // find custom delimiter
-    const delimiterRegex = str.match(/(?<=\/\/)(.*?)(?=\\n)/g).toString();
-    const isValidChar = /^[A-Za-z0-9 ]+$/.test(delimiterRegex);
-    const pattern = new RegExp((!isValidChar ? '\\': '') + delimiterRegex, 'g');
+    let delimiterRegex = str.match(/(?<=\/\/)(.*?)(?=\\n)/g).toString();
 
-    // one character only 
-    if (delimiterRegex.length === 1) {
-      // get part of string that needs to be added together
-      numStr = str.substring(str.indexOf('\\n') + 2).trim();
-      replacedStr = numStr.replace(pattern, ',').replace(/\\n/g, ',');
-    } else {
-      console.log("Custom delimiter is limited to one character");
-      process.exit(0);
+    // check for any length custom delimiter
+    if (delimiterRegex.startsWith('[')) {
+      delimiterRegex = delimiterRegex.substring(1, delimiterRegex.length -1);
     }
+
+    const pattern = new RegExp(escapeRegExp(delimiterRegex), 'g');
+
+    // extract string that needs to be added 
+    numStr = str.substring(str.indexOf('\\n') + 2).trim();
+    replacedStr = numStr.replace(pattern, ',').replace(/\\n/g, ',');
+    
     return replacedStr;
   } else {
     return str.replace(/\\n/g, ',');
   }
+}
+
+// escape special characters
+const escapeRegExp = (str) => {
+  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
 }
 
 rl.prompt();

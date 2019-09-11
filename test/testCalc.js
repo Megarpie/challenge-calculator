@@ -80,3 +80,15 @@ describe('#6: Support 1 custom single character length delimiter', () => {
     assert.equal(calculator.add('//#\\n2#2,hello#world\\n8'), 12);
   });
 });
+
+describe('#7: Support 1 custom delimiter of any length', () => {
+  it('should add numbers with custom delimiter of any length', () => {
+    assert.equal(calculator.add('//[**]\\n1**7'), 8);
+  });
+  it('should add numbers with custom delimiter and alternative delimiters', () => {
+    assert.equal(calculator.add('//[@r@]\\n3@r@6@r@9,9'), 27);
+  });
+  it('should add numbers with custom delimiter and alternative delimiters and invalid strings', () => {
+    assert.equal(calculator.add('//[;%%;]\\n1,3;%%;15;%%;blue'), 19);
+  });
+});
